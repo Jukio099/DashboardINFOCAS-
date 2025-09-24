@@ -1,0 +1,41 @@
+item,sector,programa,tema,subtema,dimension,variables,indicador,tipo_de_medida,nivel_de_desgragacion_indicadores,ano,valor,estado,ano_de_creacion,ano_de_baja,fuente_indicador,periodo_tiempo,observaciones
+1,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos x 100
+------------------------------------------------
+Número de mujeres de 15 a 49 años de edad",Tasa general de fecundidad,Tasa,DEPARTAMENTO,2021,52.7,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2028,
+2,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Probabilidad de muerte o vida de una población en función de su edad,Esperanza de vida al nacer,Número,DEPARTAMENTO,2021,70.39,Vigente,0,0,Principales indicadores: cambio demográficoo | DANE,2005-2050,
+3,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Número de nacimientos,Nacimientos,Número,DEPARTAMENTO,2021,6607.0,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2030,"Datos preliminares, base de datos no se encuentra cerrada."
+4,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos en un período x 1000
+----------------------------------------
+Población general",Tasa bruta de natalidad,Tasa,DEPARTAMENTO,2021,14.1,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2024*,Dato de vigencia 2024 preliminar calculado con nacimientos y proyecciones poblacionales post-covid.
+1,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos x 100
+------------------------------------------------
+Número de mujeres de 15 a 49 años de edad",Tasa general de fecundidad,Tasa,DEPARTAMENTO,2022,46.11,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2028,
+2,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Probabilidad de muerte o vida de una población en función de su edad,Esperanza de vida al nacer,Número,DEPARTAMENTO,2022,73.01,Vigente,0,0,Principales indicadores: cambio demográficoo | DANE,2005-2050,
+3,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Número de nacimientos,Nacimientos,Número,DEPARTAMENTO,2022,5889.0,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2030,"Datos preliminares, base de datos no se encuentra cerrada."
+4,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos en un período x 1000
+----------------------------------------
+Población general",Tasa bruta de natalidad,Tasa,DEPARTAMENTO,2022,12.62,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2024*,Dato de vigencia 2024 preliminar calculado con nacimientos y proyecciones poblacionales post-covid.
+1,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos x 100
+------------------------------------------------
+Número de mujeres de 15 a 49 años de edad",Tasa general de fecundidad,Tasa,DEPARTAMENTO,2023,40.31,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2028,
+2,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Probabilidad de muerte o vida de una población en función de su edad,Esperanza de vida al nacer,Número,DEPARTAMENTO,2023,75.64,Vigente,0,0,Principales indicadores: cambio demográficoo | DANE,2005-2050,
+3,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Número de nacimientos,Nacimientos,Número,DEPARTAMENTO,2023,5207.0,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2030,"Datos preliminares, base de datos no se encuentra cerrada."
+4,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos en un período x 1000
+----------------------------------------
+Población general",Tasa bruta de natalidad,Tasa,DEPARTAMENTO,2023,11.61,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2024*,Dato de vigencia 2024 preliminar calculado con nacimientos y proyecciones poblacionales post-covid.
+1,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos x 100
+------------------------------------------------
+Número de mujeres de 15 a 49 años de edad",Tasa general de fecundidad,Tasa,DEPARTAMENTO,2024,33.39,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2028,
+2,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Probabilidad de muerte o vida de una población en función de su edad,Esperanza de vida al nacer,Número,DEPARTAMENTO,2024,75.93,Vigente,0,0,Principales indicadores: cambio demográficoo | DANE,2005-2050,
+3,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Número de nacimientos,Nacimientos,Número,DEPARTAMENTO,2024,4642.0,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2030,"Datos preliminares, base de datos no se encuentra cerrada."
+4,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos en un período x 1000
+----------------------------------------
+Población general",Tasa bruta de natalidad,Tasa,DEPARTAMENTO,2024,9.77,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2024*,Dato de vigencia 2024 preliminar calculado con nacimientos y proyecciones poblacionales post-covid.
+1,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos x 100
+------------------------------------------------
+Número de mujeres de 15 a 49 años de edad",Tasa general de fecundidad,Tasa,DEPARTAMENTO,2025,,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2028,
+2,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Probabilidad de muerte o vida de una población en función de su edad,Esperanza de vida al nacer,Número,DEPARTAMENTO,2025,,Vigente,0,0,Principales indicadores: cambio demográficoo | DANE,2005-2050,
+3,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,Número de nacimientos,Nacimientos,Número,DEPARTAMENTO,2025,,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2030,"Datos preliminares, base de datos no se encuentra cerrada."
+4,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos en un período x 1000
+----------------------------------------
+Población general",Tasa bruta de natalidad,Tasa,DEPARTAMENTO,2025,,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2024*,Dato de vigencia 2024 preliminar calculado con nacimientos y proyecciones poblacionales post-covid.

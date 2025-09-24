@@ -1,23 +1,15 @@
 """
 🏛️ Dashboard de Competitividad de Casanare
-Una herramienta visual para entender el desarrollo del departamento
+Panorama General del Departamento - Versión Modernizada
 """
 
 import streamlit as st
-import sys
-import os
-import plotly.graph_objects as go
 import plotly.express as px
-from plotly.subplots import make_subplots
-
-# Configurar Streamlit para usar carpeta local (evita problemas de permisos)
-os.environ['STREAMLIT_CONFIG_DIR'] = os.path.join(os.path.dirname(__file__), '.streamlit')
-
-# Agregar el directorio raíz al path para importar módulos
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-from utils.loader import load_all_data, get_kpi_values, get_ranking_data
-from utils.plotting import plot_ranking_bars
+import plotly.graph_objects as go
+from utils.loader import (
+    get_kpi_values, load_ciclo_vital, load_sector_economico, 
+    load_empresarial, load_empresas_municipio
+)
 
 # Configuración de la página
 st.set_page_config(
@@ -27,67 +19,123 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 🎨 COLORES DE CASANARE (Bandera)
-COLORS_CASANARE = {
-    'verde': '#228B22',      # Verde bandera
-    'amarillo': '#FFD700',   # Amarillo bandera  
-    'rojo': '#DC143C',       # Rojo bandera
-    'verde_claro': '#90EE90',
-    'amarillo_claro': '#FFFFE0',
-    'rojo_claro': '#FFB6C1'
+# 🎨 CSS GLOBAL: Alineación profesional de métricas
+st.markdown("""
+    <style>
+        [data-testid="stMetric"] {
+            text-align: left;
+        }
+        [data-testid="stMetric"] > div {
+            text-align: left;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# 🎨 COLORES CORPORATIVOS DE CASANARE
+COLORS = {
+    'primary': '#1f77b4',      # Azul corporativo
+    'secondary': '#ff7f0e',    # Naranja
+    'success': '#2ca02c',      # Verde
+    'warning': '#d62728',      # Rojo
+    'info': '#9467bd',         # Púrpura
+    'light': '#e6f3ff',        # Azul claro
+    'gradient_start': '#1f77b4',
+    'gradient_end': '#ff7f0e'
 }
 
-# 🎨 CSS para estilizar la aplicación
+# 🎨 CSS MODERNO
 st.markdown(f"""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
     .main-header {{
-        background: linear-gradient(90deg, {COLORS_CASANARE['verde']} 0%, {COLORS_CASANARE['amarillo']} 50%, {COLORS_CASANARE['rojo']} 100%);
-        padding: 1rem;
-        border-radius: 10px;
+        background: linear-gradient(135deg, {COLORS['gradient_start']} 0%, {COLORS['gradient_end']} 100%);
+        padding: 2rem;
+        border-radius: 15px;
         color: white;
         text-align: center;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        font-family: 'Inter', sans-serif;
+    }}
+    
+    .main-header h1 {{
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }}
+    
+    .main-header h3 {{
+        font-size: 1.2rem;
+        font-weight: 400;
+        opacity: 0.9;
+        margin: 0;
     }}
     
     .metric-card {{
         background: white;
-        padding: 1rem;
-        border-radius: 10px;
-        border-left: 5px solid {COLORS_CASANARE['verde']};
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        margin: 0.5rem 0;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f0f0f0;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }}
+    
+    .metric-card:hover {{
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
     }}
     
     .section-header {{
-        background: {COLORS_CASANARE['verde_claro']};
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        border-left: 4px solid {COLORS_CASANARE['verde']};
+        background: linear-gradient(90deg, {COLORS['light']} 0%, white 100%);
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        border-left: 4px solid {COLORS['primary']};
+        margin: 2rem 0 1rem 0;
+        font-family: 'Inter', sans-serif;
+    }}
+    
+    .section-header h2 {{
+        color: {COLORS['primary']};
+        margin: 0;
+        font-weight: 600;
+    }}
+    
+    .stats-card {{
+        background: linear-gradient(135deg, {COLORS['primary']}15 0%, {COLORS['secondary']}10 100%);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid {COLORS['primary']}20;
         margin: 1rem 0;
     }}
     
-    .highlight-box {{
-        background: {COLORS_CASANARE['amarillo_claro']};
+    .highlight-number {{
+        font-size: 2rem;
+        font-weight: 700;
+        color: {COLORS['primary']};
+        margin: 0;
+    }}
+    
+    .highlight-label {{
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0;
+        font-weight: 500;
+    }}
+    
+    /* Sidebar styling */
+    .css-1d391kg {{
+        background-color: #f8f9fa;
+    }}
+    
+    /* Métricas de Streamlit */
+    [data-testid="metric-container"] {{
+        background: white;
+        border: 1px solid #e0e0e0;
         padding: 1rem;
         border-radius: 8px;
-        border: 2px solid {COLORS_CASANARE['amarillo']};
-        margin: 1rem 0;
-    }}
-    
-    .success-metric {{
-        color: {COLORS_CASANARE['verde']};
-        font-weight: bold;
-    }}
-    
-    .warning-metric {{
-        color: {COLORS_CASANARE['amarillo']};
-        font-weight: bold;
-    }}
-    
-    .danger-metric {{
-        color: {COLORS_CASANARE['rojo']};
-        font-weight: bold;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -96,347 +144,380 @@ st.markdown(f"""
 st.markdown("""
 <div class="main-header">
     <h1>🏛️ Dashboard de Competitividad de Casanare</h1>
-    <h3>📊 Datos que hablan por nuestro departamento</h3>
+    <h3>📊 Transformando datos en decisiones inteligentes</h3>
 </div>
 """, unsafe_allow_html=True)
 
-# 📊 CARGAR TODOS LOS DATOS
+# 📊 CARGAR DATOS
 @st.cache_data
-def load_complete_data():
-    """Carga todos los datos y los organiza por categorías"""
-    data = load_all_data()
-    df_main = data.get('general')
-    
-    if df_main is None or df_main.empty:
-        return None
-    
-    # Organizar datos por pilares
-    pilares = {}
-    for pilar in df_main['Pilar_Competitividad'].unique():
-        if pd.notna(pilar):
-            pilares[pilar] = df_main[df_main['Pilar_Competitividad'] == pilar]
-    
+def load_dashboard_data():
+    """Carga todos los datos necesarios para el dashboard"""
     return {
-        'general': df_main,
-        'pilares': pilares,
-        'sectores': data.get('sector'),
-        'empresas': data.get('empresarial'),
-        'municipios': data.get('municipios')
+        'kpis': get_kpi_values(),
+        'ciclo_vital': load_ciclo_vital(),
+        'sectores': load_sector_economico(),
+        'empresas': load_empresarial(),
+        'municipios': load_empresas_municipio()
     }
 
 # Cargar datos
-import pandas as pd
-all_data = load_complete_data()
+with st.spinner("🔄 Cargando datos del dashboard..."):
+    data = load_dashboard_data()
 
-if all_data is None:
-    st.error("❌ No se pudieron cargar los datos. Verifica que el archivo CSV esté disponible.")
-    st.stop()
+# 🎯 SECCIÓN 1: KPIS PRINCIPALES CON MÉTRICAS MODERNAS
+st.markdown('<div class="section-header"><h2>🎯 Indicadores Clave de Casanare</h2></div>', unsafe_allow_html=True)
 
-df_general = all_data['general']
-pilares_data = all_data['pilares']
+kpis = data['kpis']
 
-# 🎯 SECCIÓN 1: INDICADORES CLAVE
-st.markdown('<div class="section-header"><h2>🎯 Casanare en Números</h2></div>', unsafe_allow_html=True)
-
-if df_general is not None:
-    kpis = get_kpi_values(df_general)
-    
-    # Crear columnas para métricas principales
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("### 👥 Población")
-        st.metric(
-            label="Habitantes (2025)",
-            value=f"{kpis.get('poblacion', 0):,}",
-            help="Total de personas que viven en Casanare"
-        )
-        st.markdown("🏘️ *Una comunidad en crecimiento*")
-    
-    with col2:
-        st.markdown("### 💰 Economía")
-        pib_value = kpis.get('pib_millones', 0)
-        st.metric(
-            label="PIB (COP Millones)",
-            value=f"${pib_value:,.0f}",
-            help="Producto Interno Bruto del departamento"
-        )
-        st.markdown("📈 *Motor económico regional*")
-    
-    with col3:
-        st.markdown("### 🗺️ Territorio")
-        st.metric(
-            label="Superficie (km²)",
-            value=f"{kpis.get('superficie', 0):,}",
-            help="Extensión territorial de Casanare"
-        )
-        st.markdown("🌾 *Tierra de oportunidades*")
-    
-    with col4:
-        st.markdown("### 🏆 Competitividad")
-        idc_score = kpis.get('puntaje_idc', 0)
-        st.metric(
-            label="Puntaje IDC (sobre 10)",
-            value=f"{idc_score:.2f}",
-            help="Índice Departamental de Competitividad"
-        )
-        # Color según el puntaje
-        if idc_score >= 7:
-            st.markdown('<p class="success-metric">🟢 Muy competitivo</p>', unsafe_allow_html=True)
-        elif idc_score >= 5:
-            st.markdown('<p class="warning-metric">🟡 Moderadamente competitivo</p>', unsafe_allow_html=True)
-        else:
-            st.markdown('<p class="danger-metric">🔴 Necesita mejorar</p>', unsafe_allow_html=True)
-
-# 📊 SECCIÓN 2: ANÁLISIS POR PILARES DE COMPETITIVIDAD
-st.markdown('<div class="section-header"><h2>🏗️ Pilares de Competitividad</h2></div>', unsafe_allow_html=True)
-st.markdown("### 📋 ¿En qué somos buenos y dónde podemos mejorar?")
-
-if pilares_data:
-    # Crear pestañas para cada pilar
-    pilar_names = list(pilares_data.keys())
-    tabs = st.tabs([f"🔸 {pilar}" for pilar in pilar_names])
-    
-    for i, (pilar_name, tab) in enumerate(zip(pilar_names, tabs)):
-        with tab:
-            pilar_df = pilares_data[pilar_name]
-            
-            # Mostrar indicadores del pilar
-            st.markdown(f"#### 📌 Indicadores de {pilar_name}")
-            
-            # Crear columnas para mostrar indicadores
-            if len(pilar_df) > 0:
-                cols = st.columns(min(3, len(pilar_df)))
-                
-                for idx, (_, row) in enumerate(pilar_df.iterrows()):
-                    col_idx = idx % len(cols)
-                    with cols[col_idx]:
-                        # Mostrar cada indicador
-                        st.markdown(f"**{row['Indicador']}**")
-                        valor = row['Valor']
-                        unidad = row['Unidad']
-                        
-                        # Formatear el valor según la unidad
-                        if 'Puntaje' in str(unidad):
-                            st.markdown(f"<h3 style='color: {COLORS_CASANARE['verde']};'>{valor:.2f}/10</h3>", unsafe_allow_html=True)
-                            if valor >= 7:
-                                st.markdown("🟢 Excelente")
-                            elif valor >= 5:
-                                st.markdown("🟡 Bueno")
-                            else:
-                                st.markdown("🔴 Mejorar")
-                        elif '%' in str(unidad):
-                            st.markdown(f"<h3 style='color: {COLORS_CASANARE['amarillo']};'>{valor}%</h3>", unsafe_allow_html=True)
-                        else:
-                            st.markdown(f"<h3 style='color: {COLORS_CASANARE['rojo']};'>{valor:,} {unidad}</h3>", unsafe_allow_html=True)
-                        
-                        # Mostrar ranking si existe
-                        if pd.notna(row['Ranking_Nacional_2025']) and row['Ranking_Nacional_2025'] != 'N/A':
-                            ranking = row['Ranking_Nacional_2025']
-                            st.markdown(f"🏆 Posición nacional: **#{ranking}**")
-
-# 🏢 SECCIÓN 3: ECONOMÍA Y EMPRESAS
-st.markdown('<div class="section-header"><h2>🏢 Economía y Empresas</h2></div>', unsafe_allow_html=True)
-
-col1, col2 = st.columns(2)
+# Crear 4 columnas para las métricas principales con iconos GRANDES
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.markdown("### 🏭 Sectores Económicos")
-    df_sectores = all_data['sectores']
-    if df_sectores is not None and not df_sectores.empty:
-        # Gráfico de pastel con colores de Casanare
-        fig_sectores = px.pie(
-            df_sectores, 
-            values='Participación Porcentual (%)', 
-            names='Sector Económico',
-            title="💼 ¿De dónde viene la riqueza de Casanare?",
-            color_discrete_sequence=[COLORS_CASANARE['verde'], COLORS_CASANARE['amarillo'], 
-                                   COLORS_CASANARE['rojo'], COLORS_CASANARE['verde_claro'],
-                                   COLORS_CASANARE['amarillo_claro'], COLORS_CASANARE['rojo_claro']]
+    # Icono grande con HTML personalizado
+    st.markdown("""
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <span style="font-size: 3rem;">👥</span>
+    </div>
+    """, unsafe_allow_html=True)
+    st.metric(
+        label="## 👥 Población (Proy. 2025)",
+        value=f"{kpis.get('poblacion_2025', 0):,}",
+        delta="En crecimiento",
+        help="Proyección poblacional para 2025 según DANE"
+    )
+
+with col2:
+    st.markdown("""
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <span style="font-size: 3rem;">💰</span>
+    </div>
+    """, unsafe_allow_html=True)
+    pib_billones = kpis.get('pib_2023', 0) / 1000000  # Convertir a billones
+    st.metric(
+        label="## 💰 PIB Departamental (2023)",
+        value=f"${pib_billones:.1f}B COP",
+        delta="Crecimiento sostenido",
+        help="Producto Interno Bruto departamental en billones de pesos"
+    )
+
+with col3:
+    st.markdown("""
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <span style="font-size: 3rem;">🏆</span>
+    </div>
+    """, unsafe_allow_html=True)
+    st.metric(
+        label="## 🏆 Puntaje IDC (2025)",
+        value=f"{kpis.get('puntaje_idc', 0):.2f}/10",
+        delta=f"Ranking #{kpis.get('ranking_idc', 0)}",
+        delta_color="inverse",
+        help="Índice Departamental de Competitividad"
+    )
+
+with col4:
+    st.markdown("""
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <span style="font-size: 3rem;">📈</span>
+    </div>
+    """, unsafe_allow_html=True)
+    st.metric(
+        label="## 📈 Ranking Nacional IDC",
+        value=f"#{kpis.get('ranking_idc', 0)}",
+        delta="De 32 departamentos",
+        delta_color="off",
+        help="Posición en el ranking nacional de competitividad"
+    )
+
+# 📊 SECCIÓN 2: VISUALIZACIONES PRINCIPALES
+st.markdown('<div class="section-header"><h2>📊 Análisis Visual</h2></div>', unsafe_allow_html=True)
+
+# Crear dos columnas para los gráficos principales
+col1, col2 = st.columns([1.2, 0.8])
+
+with col1:
+    st.markdown("### 🍩 Composición Económica por Sectores")
+    
+    df_sectores = data['sectores']
+    if not df_sectores.empty:
+        # Treemap moderno con colores corporativos
+        fig_treemap = px.treemap(
+            df_sectores,
+            path=['sector_economico'],
+            values='participacion_porcentual',
+            title="Participación de Sectores en el PIB (%)",
+            color='participacion_porcentual',
+            color_continuous_scale='YlGnBu',
+            hover_data={
+                'participacion_porcentual': ':.1f',
+                'valor_aproximado_cop_billones': ':.1f'
+            }
         )
-        fig_sectores.update_layout(height=400)
-        st.plotly_chart(fig_sectores, use_container_width=True)
         
-        # Mostrar sector principal
-        sector_principal = df_sectores.loc[df_sectores['Participación Porcentual (%)'].idxmax()]
+        fig_treemap.update_layout(
+            height=500,
+            font=dict(size=12, family="Inter"),
+            coloraxis_showscale=False
+        )
+        
+        fig_treemap.update_traces(
+            textinfo="label+percent entry",
+            textfont_size=11,
+            textfont_color="white",
+            hovertemplate="<b>%{label}</b><br>" +
+                         "Participación: %{value:.1f}%<br>" +
+                         "<extra></extra>"
+        )
+        
+        st.plotly_chart(fig_treemap, use_container_width=True)
+        
+        # Mostrar sector líder
+        sector_lider = df_sectores.loc[df_sectores['participacion_porcentual'].idxmax()]
         st.markdown(f"""
-        <div class="highlight-box">
-            <h4>🥇 Sector Principal</h4>
-            <p><strong>{sector_principal['Sector Económico']}</strong></p>
-            <p>Representa el <strong>{sector_principal['Participación Porcentual (%)']:.1f}%</strong> de la economía</p>
+        <div class="stats-card">
+            <p class="highlight-number">{sector_lider['participacion_porcentual']:.1f}%</p>
+            <p class="highlight-label">🥇 Sector Líder: {sector_lider['sector_economico']}</p>
         </div>
         """, unsafe_allow_html=True)
 
 with col2:
+    st.markdown("### 👥 Estructura Demográfica")
+    
+    df_ciclo = data['ciclo_vital']
+    if not df_ciclo.empty:
+        # NUEVA PIRÁMIDE POBLACIONAL para mejor storytelling
+        from utils.plotting import plot_piramide_poblacional
+        fig_piramide = plot_piramide_poblacional(df_ciclo)
+        st.plotly_chart(fig_piramide, use_container_width=True)
+        
+        # Estadísticas demográficas
+        total_poblacion = df_ciclo['poblacion'].sum()
+        st.markdown(f"""
+        <div class="stats-card">
+            <p class="highlight-number">{total_poblacion:,}</p>
+            <p class="highlight-label">🏘️ Total Poblacional</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+# 🏢 SECCIÓN 3: ANÁLISIS EMPRESARIAL Y TERRITORIAL
+st.markdown('<div class="section-header"><h2>🏢 Tejido Empresarial y Territorial</h2></div>', unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
+
+with col1:
     st.markdown("### 🏪 Empresas por Tamaño")
-    df_empresas = all_data['empresas']
-    if df_empresas is not None and not df_empresas.empty:
-        # Gráfico de barras con colores de Casanare
+    
+    df_empresas = data['empresas']
+    if not df_empresas.empty:
+        # Gráfico de barras moderno con gradiente
         fig_empresas = px.bar(
             df_empresas,
-            x='Tamaño de Empresa',
-            y='Número de Empresas',
-            title="🏪 ¿Qué tipo de empresas tenemos?",
-            color='Número de Empresas',
-            color_continuous_scale=[[0, COLORS_CASANARE['verde']], 
-                                  [0.5, COLORS_CASANARE['amarillo']], 
-                                  [1, COLORS_CASANARE['rojo']]]
+            x='tamaño_de_empresa',
+            y='numero_de_empresas',
+            title="Distribución del Tejido Empresarial",
+            color='numero_de_empresas',
+            color_continuous_scale=['#e3f2fd', '#1976d2', '#0d47a1'],
+            text='numero_de_empresas'
         )
-        fig_empresas.update_layout(height=400, showlegend=False)
+        
+        fig_empresas.update_traces(
+            texttemplate='%{text:,}',
+            textposition='outside',
+            textfont_size=12,
+            textfont_color=COLORS['primary'],
+            hovertemplate="<b>%{x}</b><br>" +
+                         "Empresas: %{y:,}<br>" +
+                         "<extra></extra>"
+        )
+        
+        fig_empresas.update_layout(
+            height=400,
+            font=dict(family="Inter"),
+            xaxis_title="Tamaño de Empresa",
+            yaxis_title="Número de Empresas",
+            showlegend=False,
+            xaxis_tickangle=-45
+        )
+        
         st.plotly_chart(fig_empresas, use_container_width=True)
         
-        # Estadísticas de empresas
-        total_empresas = df_empresas['Número de Empresas'].sum()
+        # Total de empresas
+        total_empresas = df_empresas['numero_de_empresas'].sum()
         st.markdown(f"""
-        <div class="highlight-box">
-            <h4>📊 Total de Empresas</h4>
-            <p><strong>{total_empresas:,}</strong> empresas registradas</p>
-            <p>Generando empleos y desarrollo</p>
+        <div class="stats-card">
+            <p class="highlight-number">{total_empresas:,}</p>
+            <p class="highlight-label">📊 Total de Empresas Registradas</p>
         </div>
         """, unsafe_allow_html=True)
 
-# 🌆 SECCIÓN 4: MUNICIPIOS
-st.markdown('<div class="section-header"><h2>🌆 Nuestros Municipios</h2></div>', unsafe_allow_html=True)
-
-df_municipios = all_data['municipios']
-if df_municipios is not None and not df_municipios.empty:
-    # Gráfico de barras horizontales para municipios
-    fig_municipios = px.bar(
-        df_municipios.head(8),  # Top 8 municipios
-        x='Número de Empresas',
-        y='Municipio',
-        orientation='h',
-        title="🏘️ Municipios con más empresas",
-        color='Número de Empresas',
-        color_continuous_scale=[[0, COLORS_CASANARE['verde']], 
-                              [0.5, COLORS_CASANARE['amarillo']], 
-                              [1, COLORS_CASANARE['rojo']]]
-    )
-    fig_municipios.update_layout(height=400, showlegend=False)
-    st.plotly_chart(fig_municipios, use_container_width=True)
+with col2:
+    st.markdown("### 🌆 Empresas por Municipio")
     
-    # Top 3 municipios
-    st.markdown("### 🏆 Top 3 Municipios")
-    col1, col2, col3 = st.columns(3)
-    
-    top_municipios = df_municipios.head(3)
-    colors = [COLORS_CASANARE['verde'], COLORS_CASANARE['amarillo'], COLORS_CASANARE['rojo']]
-    medals = ['🥇', '🥈', '🥉']
-    
-    for i, (col, (_, row)) in enumerate(zip([col1, col2, col3], top_municipios.iterrows())):
-        with col:
-            st.markdown(f"""
-            <div style="background: {colors[i]}20; padding: 1rem; border-radius: 10px; text-align: center;">
-                <h3>{medals[i]} {row['Municipio']}</h3>
-                <p><strong>{row['Número de Empresas']:,}</strong> empresas</p>
-                <p>{row['Participación Porcentual (%)']:.1f}% del total</p>
-            </div>
-            """, unsafe_allow_html=True)
-
-# 📈 SECCIÓN 5: RANKINGS NACIONALES
-st.markdown('<div class="section-header"><h2>📈 ¿Cómo estamos a nivel nacional?</h2></div>', unsafe_allow_html=True)
-
-df_ranking = get_ranking_data(df_general)
-if not df_ranking.empty:
-    # Crear gráfico de rankings con colores personalizados
-    fig_ranking = go.Figure()
-    
-    # Añadir barras con colores según el puntaje
-    for _, row in df_ranking.iterrows():
-        valor = row['Valor']
-        color = COLORS_CASANARE['verde'] if valor >= 7 else \
-                COLORS_CASANARE['amarillo'] if valor >= 5 else \
-                COLORS_CASANARE['rojo']
+    df_municipios = data['municipios']
+    if not df_municipios.empty:
+        # Top 8 municipios con barras horizontales
+        top_municipios = df_municipios.head(8)
         
-        fig_ranking.add_trace(go.Bar(
-            x=[valor],
-            y=[row['Indicador']],
+        fig_municipios = px.bar(
+            top_municipios,
+            x='numero_de_empresas',
+            y='municipio',
             orientation='h',
-            marker_color=color,
-            name=row['Indicador'],
-            showlegend=False,
-            text=f"{valor:.2f}",
-            textposition='outside'
-        ))
-    
-    fig_ranking.update_layout(
-        title="🏆 Rankings de Competitividad (Puntaje sobre 10)",
-        xaxis_title="Puntaje",
-        yaxis_title="",
-        height=500,
-        xaxis=dict(range=[0, 10])
-    )
-    
-    st.plotly_chart(fig_ranking, use_container_width=True)
-    
-    # Resumen de rankings
-    st.markdown("### 📊 Resumen de posiciones")
-    bueno = len(df_ranking[df_ranking['Valor'] >= 7])
-    regular = len(df_ranking[(df_ranking['Valor'] >= 5) & (df_ranking['Valor'] < 7)])
-    mejorar = len(df_ranking[df_ranking['Valor'] < 5])
-    
-    col1, col2, col3 = st.columns(3)
-    with col1:
+            title="Top Municipios Empresariales",
+            color='numero_de_empresas',
+            color_continuous_scale='Oranges',
+            text='numero_de_empresas'
+        )
+        
+        fig_municipios.update_traces(
+            texttemplate='%{text:,}',
+            textposition='outside',
+            textfont_size=11,
+            hovertemplate="<b>%{y}</b><br>" +
+                         "Empresas: %{x:,}<br>" +
+                         "<extra></extra>"
+        )
+        
+        fig_municipios.update_layout(
+            height=400,
+            font=dict(family="Inter"),
+            xaxis_title="Número de Empresas",
+            yaxis_title="",
+            showlegend=False
+        )
+        
+        st.plotly_chart(fig_municipios, use_container_width=True)
+        
+        # Municipio líder
+        municipio_lider = df_municipios.iloc[0]
+        concentracion = (municipio_lider['numero_de_empresas'] / df_municipios['numero_de_empresas'].sum()) * 100
         st.markdown(f"""
-        <div style="background: {COLORS_CASANARE['verde']}20; padding: 1rem; border-radius: 10px;">
-            <h3 style="color: {COLORS_CASANARE['verde']};">🟢 Excelente</h3>
-            <p><strong>{bueno}</strong> indicadores</p>
-            <p>Puntaje ≥ 7.0</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown(f"""
-        <div style="background: {COLORS_CASANARE['amarillo']}20; padding: 1rem; border-radius: 10px;">
-            <h3 style="color: {COLORS_CASANARE['amarillo']};">🟡 Bueno</h3>
-            <p><strong>{regular}</strong> indicadores</p>
-            <p>Puntaje 5.0 - 6.9</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown(f"""
-        <div style="background: {COLORS_CASANARE['rojo']}20; padding: 1rem; border-radius: 10px;">
-            <h3 style="color: {COLORS_CASANARE['rojo']};">🔴 Mejorar</h3>
-            <p><strong>{mejorar}</strong> indicadores</p>
-            <p>Puntaje < 5.0</p>
+        <div class="stats-card">
+            <p class="highlight-number">{concentracion:.1f}%</p>
+            <p class="highlight-label">🏆 Concentración en {municipio_lider['municipio']}</p>
         </div>
         """, unsafe_allow_html=True)
 
-# 💡 SECCIÓN 6: CONCLUSIONES Y RECOMENDACIONES
-st.markdown('<div class="section-header"><h2>💡 ¿Qué nos dicen estos datos?</h2></div>', unsafe_allow_html=True)
+# 💡 SECCIÓN 4: INSIGHTS Y NAVEGACIÓN
+st.markdown('<div class="section-header"><h2>💡 Insights Clave</h2></div>', unsafe_allow_html=True)
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+    <div class="stats-card">
+        <h4 style="color: #2ca02c; margin-top: 0;">🟢 Fortalezas</h4>
+        <ul style="margin: 0; padding-left: 1rem;">
+            <li>Economía sólida basada en recursos naturales</li>
+            <li>Crecimiento poblacional sostenido</li>
+            <li>Tejido empresarial diversificado</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="stats-card">
+        <h4 style="color: #ff7f0e; margin-top: 0;">🟡 Oportunidades</h4>
+        <ul style="margin: 0; padding-left: 1rem;">
+            <li>Diversificación económica</li>
+            <li>Desarrollo del capital humano</li>
+            <li>Fortalecimiento institucional</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="stats-card">
+        <h4 style="color: #1f77b4; margin-top: 0;">🔵 Navegación</h4>
+        <p style="margin: 0.5rem 0;">Explora las secciones:</p>
+        <ul style="margin: 0; padding-left: 1rem;">
+            <li>📊 Perfil Económico</li>
+            <li>🏢 Tejido Empresarial</li>
+            <li>🛡️ Seguridad Ciudadana</li>
+            <li>🩺 Salud Pública</li>
+            <li>🎓 Educación</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ✨ SECCIÓN DE INSIGHTS Y PROPUESTAS
+st.markdown('<div class="section-header"><h2>✨ Insights y Propuestas de Acción</h2></div>', unsafe_allow_html=True)
 
 st.markdown(f"""
-<div class="highlight-box">
-    <h3>🎯 Conclusiones principales:</h3>
+<div style="background: {COLORS['primary']}15; padding: 2rem; border-radius: 15px; border-left: 5px solid {COLORS['primary']}; margin: 2rem 0;">
+    <h4 style="color: {COLORS['primary']}; margin-top: 0;">🎯 Análisis Integral de Casanare</h4>
     
-    <h4>🟢 Fortalezas de Casanare:</h4>
+    <p><strong>Fortalezas Identificadas:</strong></p>
     <ul>
-        <li>💰 <strong>Economía sólida</strong>: PIB de ${kpis.get('pib_millones', 0):,.0f} millones</li>
-        <li>👥 <strong>Población creciente</strong>: {kpis.get('poblacion', 0):,} habitantes</li>
-        <li>🏢 <strong>Tejido empresarial activo</strong>: Miles de empresas generando empleo</li>
-        <li>🌾 <strong>Territorio extenso</strong>: {kpis.get('superficie', 0):,} km² de oportunidades</li>
+        <li><strong>Base económica sólida:</strong> El sector extractivo (minas y canteras) domina con {sector_lider['participacion_porcentual']:.1f}% del PIB, proporcionando estabilidad financiera departamental.</li>
+        <li><strong>Tejido empresarial activo:</strong> {total_empresas:,} empresas registradas demuestran un ecosistema empresarial dinámico y diversificado.</li>
+        <li><strong>Estructura poblacional favorable:</strong> Con {total_poblacion:,} habitantes, Casanare mantiene una distribución demográfica que favorece el crecimiento económico.</li>
     </ul>
     
-    <h4>🟡 Oportunidades de mejora:</h4>
+    <p><strong>Oportunidades Estratégicas:</strong></p>
     <ul>
-        <li>📈 <strong>Competitividad</strong>: Trabajar en los indicadores con puntaje menor a 7</li>
-        <li>🎓 <strong>Capital humano</strong>: Fortalecer educación y capacitación</li>
-        <li>🏗️ <strong>Infraestructura</strong>: Mejorar conectividad y servicios</li>
-        <li>🤝 <strong>Innovación</strong>: Promover empresas de mayor tamaño</li>
+        <li><strong>Diversificación económica:</strong> Es crucial reducir la dependencia del sector extractivo invirtiendo en agricultura tecnificada, turismo sostenible y sectores de servicios.</li>
+        <li><strong>Fortalecimiento empresarial:</strong> Implementar programas para que las {df_empresas[df_empresas['tamaño_de_empresa'] == 'Micro']['numero_de_empresas'].iloc[0]:,} microempresas puedan escalar a pequeñas y medianas empresas.</li>
+        <li><strong>Desarrollo territorial equilibrado:</strong> Promover la descentralización empresarial desde {municipio_lider['municipio']} hacia otros municipios para un crecimiento más equitativo.</li>
     </ul>
     
-    <h4>🚀 El futuro de Casanare:</h4>
-    <p>Con una base económica sólida y un territorio lleno de potencial, Casanare está bien posicionado para seguir creciendo. Los datos muestran que tenemos los fundamentos para ser un departamento líder en competitividad.</p>
+    <p><strong>Acciones Prioritarias Recomendadas:</strong></p>
+    <ol>
+        <li>Crear un fondo de diversificación económica para sectores emergentes</li>
+        <li>Establecer incubadoras de empresas en municipios con menor concentración empresarial</li>
+        <li>Desarrollar un plan maestro de competitividad departamental a 10 años</li>
+        <li>Fortalecer la articulación universidad-empresa-estado para la innovación</li>
+    </ol>
 </div>
 """, unsafe_allow_html=True)
 
-# 📱 FOOTER
+# 💬 SECCIÓN DE COMENTARIOS
+st.markdown('<div class="section-header"><h2>💬 Envíanos tus Comentarios</h2></div>', unsafe_allow_html=True)
+
+st.markdown("""
+<div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+    <p style="margin: 0; color: #666;">
+        ¿Tienes sugerencias para mejorar este dashboard? ¿Te gustaría ver algún indicador adicional? 
+        Tu retroalimentación es valiosa para seguir mejorando esta herramienta de análisis.
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+# Área de comentarios
+comentario = st.text_area(
+    "Tu comentario:",
+    placeholder="Escribe aquí tus sugerencias, comentarios o preguntas sobre el dashboard...",
+    height=100,
+    help="Comparte tus ideas para mejorar el análisis de competitividad de Casanare"
+)
+
+col1, col2, col3 = st.columns([1, 1, 2])
+
+with col2:
+    if st.button("📤 Enviar comentario", type="primary", use_container_width=True):
+        if comentario.strip():
+            st.success("🎉 ¡Gracias por tu comentario! Lo tendremos en cuenta para futuras mejoras del dashboard.")
+            st.balloons()
+            
+            # Mostrar el comentario (simulación)
+            st.markdown(f"""
+            <div style="background: #e8f5e8; padding: 1rem; border-radius: 8px; border-left: 4px solid #28a745; margin-top: 1rem;">
+                <strong>💬 Tu comentario:</strong><br>
+                <em>"{comentario}"</em>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.warning("⚠️ Por favor, escribe un comentario antes de enviar.")
+
+# 🏛️ FOOTER MODERNO
 st.markdown("---")
 st.markdown(f"""
-<div style="text-align: center; padding: 2rem; background: {COLORS_CASANARE['verde']}10; border-radius: 10px;">
-    <h3>🏛️ Gobernación de Casanare</h3>
-    <p>📊 Dashboard desarrollado para la toma de decisiones basada en datos</p>
-    <p>💚💛❤️ <em>Casanare, territorio de oportunidades</em></p>
+<div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, {COLORS['light']} 0%, white 100%); border-radius: 15px; margin-top: 2rem;">
+    <h3 style="color: {COLORS['primary']}; margin-bottom: 0.5rem;">🏛️ Gobernación de Casanare</h3>
+    <p style="color: #666; margin: 0.5rem 0;">📊 Dashboard de Competitividad Departamental</p>
+    <p style="color: #999; margin: 0; font-size: 0.9rem;">
+        💡 <em>Datos que impulsan el desarrollo territorial</em>
+    </p>
 </div>
 """, unsafe_allow_html=True)

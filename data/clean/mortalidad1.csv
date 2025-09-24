@@ -1,0 +1,46 @@
+item,sector,programa,tema,subtema,dimension,variables,indicador,tipo_de_medida,nivel_de_desgragacion_indicadores,ano,valor,estado,ano_de_creacion,ano_de_baja,fuente_indicador,periodo_tiempo,observaciones
+30,Salud,Salud Pública,MORTALIDAD,Salud mental,Análisis de Situación en Salud,"Número de suicidios x 100.000
+--------------------------------------------
+Población general",Mortalidad por Lesiones autoinfligidas intencionalmente (suicidios),Número,NACIONAL,2021,9.19,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE | Medicina Legal,2005-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+32,Salud,Salud Pública,MORTALIDAD,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de defunciones x 100.000 
+---------------------------------------------------
+Población general",Tasa mortalidad general,Tasa,NACIONAL,2021,581.51,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2020-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+35,Salud,Salud Pública,MORTALIDAD,Seguridad Alimentaria y Nutricional,Análisis de Situación en Salud,"Número de muertes en menores de 5 años con causa básica de desnutrición aguda x 100.000
+--------------------------------------------
+Total de población menor de 5 años",Tasa de mortalidad por desnutrición aguda,Tasa,DEPARTAMENTO,2021,0.0,Vigente,0,0,SIVIGILA | Programa de Seguridad Alimentaria y nutricional,2013-2024*,"Dato para la vigencia 2024 es preliminar, suministrado por cálculos del Programa de Seguridad Alimentaria y Nutricional"
+30,Salud,Salud Pública,MORTALIDAD,Salud mental,Análisis de Situación en Salud,"Número de suicidios x 100.000
+--------------------------------------------
+Población general",Mortalidad por Lesiones autoinfligidas intencionalmente (suicidios),Número,NACIONAL,2022,4.67,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE | Medicina Legal,2005-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+32,Salud,Salud Pública,MORTALIDAD,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de defunciones x 100.000 
+---------------------------------------------------
+Población general",Tasa mortalidad general,Tasa,NACIONAL,2022,431.11,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2020-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+35,Salud,Salud Pública,MORTALIDAD,Seguridad Alimentaria y Nutricional,Análisis de Situación en Salud,"Número de muertes en menores de 5 años con causa básica de desnutrición aguda x 100.000
+--------------------------------------------
+Total de población menor de 5 años",Tasa de mortalidad por desnutrición aguda,Tasa,DEPARTAMENTO,2022,7.7,Vigente,0,0,SIVIGILA | Programa de Seguridad Alimentaria y nutricional,2013-2024*,"Dato para la vigencia 2024 es preliminar, suministrado por cálculos del Programa de Seguridad Alimentaria y Nutricional"
+30,Salud,Salud Pública,MORTALIDAD,Salud mental,Análisis de Situación en Salud,"Número de suicidios x 100.000
+--------------------------------------------
+Población general",Mortalidad por Lesiones autoinfligidas intencionalmente (suicidios),Numero,NACIONAL,2023,6.95,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE | Medicina Legal,2005-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+32,Salud,Salud Pública,MORTALIDAD,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de defunciones x 100.000 
+---------------------------------------------------
+Población general",Tasa mortalidad general,Tasa,NACIONAL,2023,400.19,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2020-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+35,Salud,Salud Pública,MORTALIDAD,Seguridad Alimentaria y Nutricional,Análisis de Situación en Salud,"Número de muertes en menores de 5 años con causa básica de desnutrición aguda x 100.000
+--------------------------------------------
+Total de población menor de 5 años",Tasa de mortalidad por desnutrición aguda,Tasa,DEPARTAMENTO,2023,0.0,Vigente,0,0,SIVIGILA | Programa de Seguridad Alimentaria y nutricional,2013-2024*,"Dato para la vigencia 2024 es preliminar, suministrado por cálculos del Programa de Seguridad Alimentaria y Nutricional"
+30,Salud,Salud Pública,MORTALIDAD,Salud mental,Análisis de Situación en Salud,"Número de suicidios x 100.000
+--------------------------------------------
+Población general",Mortalidad por Lesiones autoinfligidas intencionalmente (suicidios),Número,NACIONAL,2024,5.32,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE | Medicina Legal,2005-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+32,Salud,Salud Pública,MORTALIDAD,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de defunciones x 100.000 
+---------------------------------------------------
+Población general",Tasa mortalidad general,Tasa,NACIONAL,2024,401.98,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2020-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+35,Salud,Salud Pública,MORTALIDAD,Seguridad Alimentaria y Nutricional,Análisis de Situación en Salud,"Número de muertes en menores de 5 años con causa básica de desnutrición aguda x 100.000
+--------------------------------------------
+Total de población menor de 5 años",Tasa de mortalidad por desnutrición aguda,Tasa,DEPARTAMENTO,2024,2.7,Vigente,0,0,SIVIGILA | Programa de Seguridad Alimentaria y nutricional,2013-2024*,"Dato para la vigencia 2024 es preliminar, suministrado por cálculos del Programa de Seguridad Alimentaria y Nutricional"
+30,Salud,Salud Pública,MORTALIDAD,Salud mental,Análisis de Situación en Salud,"Número de suicidios x 100.000
+--------------------------------------------
+Población general",Mortalidad por Lesiones autoinfligidas intencionalmente (suicidios),Número,NACIONAL,2025,,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE | Medicina Legal,2005-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+32,Salud,Salud Pública,MORTALIDAD,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de defunciones x 100.000 
+---------------------------------------------------
+Población general",Tasa mortalidad general,Tasa,NACIONAL,2025,,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2020-2024*,Rezago de información depurada y certificada por fuentes nacionales para mortalidad de 2 años. Hasta el momento se certifica hasta el año 2024 preliminar por MinSalud.
+35,Salud,Salud Pública,MORTALIDAD,Seguridad Alimentaria y Nutricional,Análisis de Situación en Salud,"Número de muertes en menores de 5 años con causa básica de desnutrición aguda x 100.000
+--------------------------------------------
+Total de población menor de 5 años",Tasa de mortalidad por desnutrición aguda,Tasa,DEPARTAMENTO,2025,,Vigente,0,0,SIVIGILA | Programa de Seguridad Alimentaria y nutricional,2013-2024*,"Dato para la vigencia 2024 es preliminar, suministrado por cálculos del Programa de Seguridad Alimentaria y Nutricional"
