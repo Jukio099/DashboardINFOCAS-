@@ -1,11 +1,11 @@
-sector_economico,participacion_porcentual_porcentaje,valor_aproximado_cop_billones
+sector_economico,participacion_porcentual,valor_aproximado_cop_billones
 Explotación de minas y canteras,50.4,
-Comercio al por mayor y al por menor,,
-"Agricultura, ganadería, caza, silvicultura y pesca",,3.0
-Administración pública y defensa / Educación / Salud,,
-Industrias manufactureras,,0.6
-Actividades inmobiliarias,,0.5
-"Suministro de electricidad, gas, vapor y aire acondicionado",,0.4
-Construcción,,0.4
-Otros Sectores,,
+Comercio al por mayor y al por menor,15.2,
+"Agricultura, ganadería, caza, silvicultura y pesca",12.7,3.0
+Administración pública y defensa / Educación / Salud,6.7,
+Industrias manufactureras,2.7,0.6
+Actividades inmobiliarias,2.1,0.5
+"Suministro de electricidad, gas, vapor y aire acondicionado",1.9,0.4
+Construcción,1.6,0.4
+Otros Sectores,6.7,
 Total,100.0,

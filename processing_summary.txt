@@ -1,0 +1,127 @@
+=== RESUMEN DE PROCESAMIENTO ===
+
+Archivo Excel: Indicadores generalidades oficial.xlsx
+Directorio de salida: data\clean
+
+Hojas procesadas: 19
+  Generalidades: 18 filas, 7 columnas
+  Ciclo vital: 7 filas, 3 columnas
+  CONTEXTO INSTITUCIONAL DE PROTE: 5 filas, 17 columnas
+  SEXUALIADAD, DERECHOS SEXUALES : 5 filas, 18 columnas
+  ESTRUCTURA DEMOGRAFICA: 20 filas, 18 columnas
+  Sector Economico: 10 filas, 3 columnas
+  Empresarial: 5 filas, 3 columnas
+  Numero de empresas por municipi: 6 filas, 3 columnas
+  Produccion: 5 filas, 6 columnas
+  Cultivos: 6 filas, 8 columnas
+  Graduados profesion: 10 filas, 3 columnas
+  CALIDAD DEL AGUA: 5 filas, 17 columnas
+  MORBILIDAD1: 5 filas, 18 columnas
+  MORTALIDAD1: 15 filas, 18 columnas
+  Tasa Deserción Sector Oficial: 114 filas, 5 columnas
+  CONDICIONES MATERNAS Y NUTRICIO: 5 filas, 18 columnas
+  Aranceles : 5 filas, 4 columnas
+  geologico: 5 filas, 4 columnas
+  Seguridad: 14 filas, 6 columnas
+
+=== RESUMEN DE VALIDACIÓN ===
+
+Total de hojas: 19
+Hojas válidas: 0
+Hojas con errores: 19
+
+Generalidades: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Generalidades' - No hay modelo definido para la hoja: Generalidades
+
+
+Ciclo vital: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Ciclo vital' - No hay modelo definido para la hoja: Ciclo vital
+
+
+CONTEXTO INSTITUCIONAL DE PROTE: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'CONTEXTO INSTITUCIONAL DE PROTE' - No hay modelo definido para la hoja: CONTEXTO INSTITUCIONAL DE PROTE
+
+
+SEXUALIADAD, DERECHOS SEXUALES : ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'SEXUALIADAD, DERECHOS SEXUALES ' - No hay modelo definido para la hoja: SEXUALIADAD, DERECHOS SEXUALES 
+
+
+ESTRUCTURA DEMOGRAFICA: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'ESTRUCTURA DEMOGRAFICA' - No hay modelo definido para la hoja: ESTRUCTURA DEMOGRAFICA
+
+
+Sector Economico: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Sector Economico' - No hay modelo definido para la hoja: Sector Economico
+
+
+Empresarial: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Empresarial' - No hay modelo definido para la hoja: Empresarial
+
+
+Numero de empresas por municipi: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Numero de empresas por municipi' - No hay modelo definido para la hoja: Numero de empresas por municipi
+
+
+Produccion: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Produccion' - No hay modelo definido para la hoja: Produccion
+
+
+Cultivos: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Cultivos' - No hay modelo definido para la hoja: Cultivos
+
+
+Graduados profesion: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Graduados profesion' - No hay modelo definido para la hoja: Graduados profesion
+
+
+CALIDAD DEL AGUA: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'CALIDAD DEL AGUA' - No hay modelo definido para la hoja: CALIDAD DEL AGUA
+
+
+MORBILIDAD1: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'MORBILIDAD1' - No hay modelo definido para la hoja: MORBILIDAD1
+
+
+MORTALIDAD1: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'MORTALIDAD1' - No hay modelo definido para la hoja: MORTALIDAD1
+
+
+Tasa Deserción Sector Oficial: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Tasa Deserción Sector Oficial' - No hay modelo definido para la hoja: Tasa Deserción Sector Oficial
+
+
+CONDICIONES MATERNAS Y NUTRICIO: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'CONDICIONES MATERNAS Y NUTRICIO' - No hay modelo definido para la hoja: CONDICIONES MATERNAS Y NUTRICIO
+
+
+Aranceles : ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Aranceles ' - No hay modelo definido para la hoja: Aranceles 
+
+
+geologico: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'geologico' - No hay modelo definido para la hoja: geologico
+
+
+Seguridad: ❌ CON ERRORES
+  Total de errores: 1
+  Fila 0: sheet_name = 'Seguridad' - No hay modelo definido para la hoja: Seguridad
+
+

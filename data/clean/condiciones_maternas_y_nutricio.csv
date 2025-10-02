@@ -1,4 +1,4 @@
-item,sector,programa,tema,subtema,dimension,variables,indicador,tipo_de_medida,nivel_de_desgragacion_indicadores,ano,valor,estado,ano_de_creacion,ano_de_baja,fuente_indicador,periodo_tiempo,observaciones
+item,sector,programa,tema,subtema,dimensi_n,variables,indicador,tipo_de_medida,nivel_de_desgragaci_n_indicadores,a_o,valor,estado,a_o_de_creaci_n,a_o_de_baja,fuente_indicador,periodo_tiempo,observaciones
 1,Salud,Salud Pública,CONDICIONES MATERNAS Y NUTRICIONALES,Condiciones maternas y nutricionales,Análisis de Situación en Salud,"Número de casos de Morbilidad Materna Extrema reportados por la autoridad sanitaria para un año dado en el DPTO de Casanare * 1000 (n.v.)
 ---------------------------------------------------------
 Total de mujeres en gestación o dentro de los 42 días siguientes a la terminación del embarazo",Tasa de incidencia Morbilidad Materna Extrema en el DPTO de Casanare,Tasa,NACIONAL,2021,54.29,Vigente,0,0,SIVIGILA departamental con retroalimentación INS,2005-2024*,Dato vigencia 2024 es preliminar

@@ -134,8 +134,8 @@ def plot_treemap_sectores_mejorado(df_sectores):
     # Filtrar datos válidos y excluir el total
     df_limpio = df_sectores[
         (df_sectores['sector_economico'] != 'Total') & 
-        (df_sectores['participacion_porcentual_porcentaje'].notna()) &
-        (df_sectores['participacion_porcentual_porcentaje'] > 0)
+        (df_sectores['participacion_porcentual'].notna()) &
+        (df_sectores['participacion_porcentual'] > 0)
     ].copy()
     
     if df_limpio.empty:
@@ -153,12 +153,12 @@ def plot_treemap_sectores_mejorado(df_sectores):
     fig = px.treemap(
         df_limpio,
         path=['sector_economico'],  # Nombre correcto de la columna
-        values='participacion_porcentual_porcentaje',  # Nombre correcto de la columna
+        values='participacion_porcentual',  # Nombre correcto de la columna
         title='<b>🏭 Participación de Sectores Económicos en el PIB</b>',
-        color='participacion_porcentual_porcentaje',
+        color='participacion_porcentual',
         # Colores más vivos y contrastantes
         color_continuous_scale='Viridis',  # Escala más vibrante
-        hover_data={'participacion_porcentual_porcentaje': ':.1f'}
+        hover_data={'participacion_porcentual': ':.1f'}
     )
     
     fig.update_traces(

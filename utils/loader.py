@@ -16,7 +16,7 @@ def load_generalidades():
     try:
         return pd.read_csv(DATA_DIR / "generalidades.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo generalidades.csv no encontrado")
+        st.error("❌ Archivo generalidades.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -25,7 +25,7 @@ def load_sector_economico():
     try:
         return pd.read_csv(DATA_DIR / "sector_economico.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo sector_economico.csv no encontrado")
+        st.error("❌ Archivo sector_economico.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -34,7 +34,7 @@ def load_empresarial():
     try:
         return pd.read_csv(DATA_DIR / "empresarial.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo empresarial.csv no encontrado")
+        st.error("❌ Archivo empresarial.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -43,7 +43,7 @@ def load_empresas_municipio():
     try:
         return pd.read_csv(DATA_DIR / "numero_de_empresas_por_municipi.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo numero_de_empresas_por_municipi.csv no encontrado")
+        st.error("❌ Archivo numero_de_empresas_por_municipi.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -52,7 +52,7 @@ def load_ciclo_vital():
     try:
         return pd.read_csv(DATA_DIR / "ciclo_vital.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo ciclo_vital.csv no encontrado")
+        st.error("❌ Archivo ciclo_vital.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -61,7 +61,7 @@ def load_graduados():
     try:
         return pd.read_csv(DATA_DIR / "graduados_profesion.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo graduados_profesion.csv no encontrado")
+        st.error("❌ Archivo graduados_profesion.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -70,7 +70,7 @@ def load_desercion():
     try:
         return pd.read_csv(DATA_DIR / "tasa_desercion_sector_oficial.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo tasa_desercion_sector_oficial.csv no encontrado")
+        st.error("❌ Archivo tasa_desercion_sector_oficial.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -79,7 +79,7 @@ def load_morbilidad():
     try:
         return pd.read_csv(DATA_DIR / "morbilidad1.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo morbilidad1.csv no encontrado")
+        st.error("❌ Archivo morbilidad1.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -88,7 +88,7 @@ def load_calidad_agua():
     try:
         return pd.read_csv(DATA_DIR / "calidad_del_agua.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo calidad_del_agua.csv no encontrado")
+        st.error("❌ Archivo calidad_del_agua.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -97,7 +97,7 @@ def load_seguridad():
     try:
         return pd.read_csv(DATA_DIR / "seguridad.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo seguridad.csv no encontrado")
+        st.error("❌ Archivo seguridad.csv no encontrado")
         return pd.DataFrame()
 
 @st.cache_data
@@ -106,87 +106,85 @@ def load_estructura_demografica():
     try:
         return pd.read_csv(DATA_DIR / "estructura_demografica.csv")
     except FileNotFoundError:
-        st.warning("⚠️ Archivo estructura_demografica.csv no encontrado")
+        st.error("❌ Archivo estructura_demografica.csv no encontrado")
         return pd.DataFrame()
 
 def get_kpi_values():
-    """Extrae KPIs principales desde datos limpios."""
+    """Extrae KPIs principales EXCLUSIVAMENTE desde datos CSV."""
     df_general = load_generalidades()
     
     if df_general.empty:
-        return {
-            'poblacion_2025': 481938,
-            'pib_2023': 23082000,
-            'puntaje_idc': 5.01,
-            'ranking_idc': 17
-        }
+        st.error("❌ No se pudieron cargar los datos generales. Verifique que el archivo generalidades.csv existe.")
+        return {}
     
-    # Buscar valores específicos en las primeras filas
-    kpis = {
-        'poblacion_2025': 481938,
-        'pib_2023': 23082000,
-        'puntaje_idc': 5.01,
-        'ranking_idc': 17
-    }
+    kpis = {}
     
-    # Si los datos están en formato tabular, extraer valores
+    # Extraer valores reales desde CSV
     try:
         for _, row in df_general.iterrows():
-            if 'poblacion' in str(row.iloc[1]).lower():
-                kpis['poblacion_2025'] = int(row.iloc[3]) if pd.notna(row.iloc[3]) else 481938
-            elif 'pib' in str(row.iloc[1]).lower():
-                kpis['pib_2023'] = float(row.iloc[3]) if pd.notna(row.iloc[3]) else 23082000
-            elif 'puntaje' in str(row.iloc[1]).lower() or 'idc' in str(row.iloc[1]).lower():
-                kpis['puntaje_idc'] = float(row.iloc[3]) if pd.notna(row.iloc[3]) else 5.01
-                kpis['ranking_idc'] = int(row.iloc[5]) if len(row) > 5 and pd.notna(row.iloc[5]) else 17
-    except:
-        pass  # Usar valores por defecto
+            indicador = str(row.iloc[1]).lower()
+            valor = row.iloc[3]
+            
+            if 'poblacion' in indicador and 'total' in indicador:
+                kpis['poblacion_2025'] = int(valor) if pd.notna(valor) else 0
+            elif 'pib' in indicador and 'departamental' in indicador:
+                kpis['pib_2023'] = float(valor) if pd.notna(valor) else 0
+            elif 'puntaje' in indicador and 'general' in indicador:
+                kpis['puntaje_idc'] = float(valor) if pd.notna(valor) else 0
+            elif 'ranking' in indicador:
+                kpis['ranking_idc'] = int(valor) if pd.notna(valor) else 0
+    except Exception as e:
+        st.error(f"❌ Error procesando datos generales: {e}")
+        return {}
     
     return kpis
 
 def get_salud_kpis():
-    """Extrae KPIs de salud pública."""
+    """Extrae KPIs de salud EXCLUSIVAMENTE desde datos CSV."""
     df_demo = load_estructura_demografica()
     
     if df_demo.empty:
-        return {
-            'esperanza_vida': 76.2,
-            'mortalidad_infantil': 8.9,
-            'fecundidad_adolescente': 45.7
-        }
+        st.error("❌ No se pudieron cargar los datos demográficos. Verifique que el archivo estructura_demografica.csv existe.")
+        return {}
     
-    kpis = {
-        'esperanza_vida': 76.2,
-        'mortalidad_infantil': 8.9,
-        'fecundidad_adolescente': 45.7
-    }
+    kpis = {}
     
-    # Extraer valores reales si están disponibles
+    # Extraer valores reales desde CSV
     try:
         for _, row in df_demo.iterrows():
             indicador = str(row.iloc[0]).lower()
             valor = row.iloc[1]
             
             if 'esperanza' in indicador and 'vida' in indicador:
-                kpis['esperanza_vida'] = float(valor) if pd.notna(valor) else 76.2
+                kpis['esperanza_vida'] = float(valor) if pd.notna(valor) else 0
             elif 'mortalidad' in indicador and 'infantil' in indicador:
-                kpis['mortalidad_infantil'] = float(valor) if pd.notna(valor) else 8.9
+                kpis['mortalidad_infantil'] = float(valor) if pd.notna(valor) else 0
             elif 'fecundidad' in indicador and 'adolescente' in indicador:
-                kpis['fecundidad_adolescente'] = float(valor) if pd.notna(valor) else 45.7
-    except:
-        pass  # Usar valores por defecto
+                kpis['fecundidad_adolescente'] = float(valor) if pd.notna(valor) else 0
+    except Exception as e:
+        st.error(f"❌ Error procesando datos demográficos: {e}")
+        return {}
     
     return kpis
 
 def get_educacion_kpis():
-    """Extrae KPIs de educación."""
+    """Extrae KPIs de educación EXCLUSIVAMENTE desde datos CSV."""
     df_desercion = load_desercion()
     df_graduados = load_graduados()
     
-    tasa_desercion_promedio = df_desercion['tasa_desercion'].mean() if not df_desercion.empty else 5.5
-    total_graduados = df_graduados['numero_de_graduados'].sum() if not df_graduados.empty else 4850
+    kpis = {}
     
-    return {
-        'tasa_desercion_promedio': round(tasa_desercion_promedio, 1),
-        'total_graduados': int(total_graduados)
-    }
+    # Calcular desde datos reales
+    if not df_desercion.empty and 'tasa_desercion' in df_desercion.columns:
+        kpis['tasa_desercion_promedio'] = round(df_desercion['tasa_desercion'].mean(), 1)
+    else:
+        st.warning("⚠️ No se encontraron datos de deserción")
+        kpis['tasa_desercion_promedio'] = 0
+    
+    if not df_graduados.empty and 'numero_de_graduados' in df_graduados.columns:
+        kpis['total_graduados'] = int(df_graduados['numero_de_graduados'].sum())
+    else:
+        st.warning("⚠️ No se encontraron datos de graduados")
+        kpis['total_graduados'] = 0
+    
+    return kpis

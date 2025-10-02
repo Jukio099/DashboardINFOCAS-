@@ -1,7 +1,7 @@
-sector,criterio,valor_actual_en_casanare,escenario_ideal,brecha_de_mejora_potencial_porcentaje,cantidad_de_hectareas,numero_de_animales,ano
+sector,criterio,valor_actual_en_casanare,escenario_ideal,brecha_de_mejora_potencial,cantidad_de_hectareas,numero_de_animales,a_o
 Arroz,Rendimiento (ton/ha),5.52,,34.0,229185.0,,2022
 Palma,Rendimiento Aceite crudo (ton/ha),,6.0,62.2,79430.0,,2022
-Café,Rendimiento (ton/ha),0.9,,166.7,,,2022
+Café,Rendimiento (ton/ha),0.9,,1.667,,,2022
 Piña MD2,Rendimiento (ton/ha),60,100.0,66.7,,,2022
 Ganadería,Natalidad promedio (%),40%-50%,0.63,26.0% - 57.5%,,2304387.0,2024
 Cacao,,,,,2549.0,,2024

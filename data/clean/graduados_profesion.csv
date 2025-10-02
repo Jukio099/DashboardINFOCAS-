@@ -1,11 +1,11 @@
-área_de_conocimiento,numero_de_graduados,porcentaje_del_total_porcentaje
-Administración de Empresas y Derecho,4.372,44.6
-"Ingeniería, Industria y Construcción",3.107,
-"Ciencias Sociales, Periodismo e Información",721.0,
-Salud y Bienestar,419.0,
-Educación,400.0,
-"Ciencias Naturales, Matemáticas y Estadística",325.0,
-"Agropecuario, Silvicultura, Pesca y Veterinaria",243.0,
-Tecnologías de la Información y la Comunicación (TIC),130.0,
-Otros,90.0,0.9
-Total,9.807,100.0
+área_de_conocimiento,número_de_graduados,porcentaje_del_total
+Administración de Empresas y Derecho,4372,0.4458040175384929
+"Ingeniería, Industria y Construcción",3107,0.3168145202406444
+"Ciencias Sociales, Periodismo e Información",721,0.0735189150606709
+Salud y Bienestar,419,0.0427245844804731
+Educación,400,0.040787192821454
+"Ciencias Naturales, Matemáticas y Estadística",325,0.0331395941674314
+"Agropecuario, Silvicultura, Pesca y Veterinaria",243,0.0247782196390333
+Tecnologías de la Información y la Comunicación (TIC),130,0.0132558376669725
+Otros,90,0.0091771183848271
+Total,9807,1.0

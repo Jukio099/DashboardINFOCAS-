@@ -1,6 +1,6 @@
-tamano_de_empresa,numero_de_empresas,porcentaje_del_total_porcentaje
-Micro,22.692,94.7
-Pequeña,989.0,
-Mediana,159.0,0.7
-Grande,120.0,0.5
-Total,23.96,100.0
+tamaño_de_empresa,numero_de_empresas,porcentaje_del_total
+Micro,22692,94.7
+Pequeña,989,
+Mediana,159,0.7
+Grande,120,0.5
+Total,23960,100.0
