@@ -13,8 +13,9 @@ import numpy as np
 from pathlib import Path
 import logging
 
-# Importar cargador de datos
-from utils.loader_v3 import get_data_loader
+# Importar módulos de la aplicación
+from utils.loader import get_data_loader
+# Los imports de los gráficos se harán directamente en los callbacks
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
@@ -97,8 +98,17 @@ app.layout = html.Div([
 ])
 
 # 🏠 PÁGINA DE INICIO
-def create_home_page():
-    """Crear página de inicio con KPIs principales"""
+def create_home_page() -> dbc.Container:
+    """
+    Genera el layout para la página de inicio (Panorama General).
+
+    Esta página muestra los KPIs más importantes y una selección de
+    visualizaciones clave de diferentes áreas para ofrecer un resumen
+    rápido del estado de competitividad de Casanare.
+
+    Returns:
+        dbc.Container: El componente de layout para la página de inicio.
+    """
     kpis = data_loader.get_kpis()
     empresas_total = data_loader.get_empresas_total()
     
@@ -150,41 +160,37 @@ def create_home_page():
         dbc.Row([
             dbc.Col([
                 html.H3("📊 Sectores Económicos", style={'color': '#1f77b4', 'marginBottom': '1rem'}),
-                html.Iframe(
-                    id="grafico-sectores",
-                    style={'width': '100%', 'height': '500px', 'border': 'none'}
-                )
+                dcc.Graph(id="grafico-sectores")
             ], width=6),
             dbc.Col([
                 html.H3("🏢 Distribución Empresarial", style={'color': '#1f77b4', 'marginBottom': '1rem'}),
-                html.Iframe(
-                    id="grafico-empresas",
-                    style={'width': '100%', 'height': '500px', 'border': 'none'}
-                )
+                dcc.Graph(id="grafico-empresas")
             ], width=6)
         ], className="mb-4"),
         
         dbc.Row([
             dbc.Col([
                 html.H3("🎓 Graduados por Área", style={'color': '#1f77b4', 'marginBottom': '1rem'}),
-                html.Iframe(
-                    id="grafico-graduados",
-                    style={'width': '100%', 'height': '500px', 'border': 'none'}
-                )
+                dcc.Graph(id="grafico-graduados")
             ], width=6),
             dbc.Col([
                 html.H3("🩺 Evolución de Dengue", style={'color': '#1f77b4', 'marginBottom': '1rem'}),
-                html.Iframe(
-                    id="grafico-dengue",
-                    style={'width': '100%', 'height': '500px', 'border': 'none'}
-                )
+                dcc.Graph(id="grafico-dengue")
             ], width=6)
         ])
     ], fluid=True)
 
 # 📊 PÁGINA ECONÓMICA
-def create_economic_page():
-    """Crear página de perfil económico"""
+def create_economic_page() -> dbc.Container:
+    """
+    Genera el layout para la página de Perfil Económico.
+
+    Esta sección se enfoca en la estructura económica del departamento,
+    incluyendo la composición del PIB y la productividad de sectores clave.
+
+    Returns:
+        dbc.Container: El componente de layout para la página económica.
+    """
     return dbc.Container([
         html.H1("📊 Perfil Económico", style={'color': '#1f77b4', 'marginBottom': '2rem'}),
         
@@ -210,8 +216,16 @@ def create_economic_page():
     ], fluid=True)
 
 # 🏢 PÁGINA EMPRESARIAL
-def create_empresarial_page():
-    """Crear página de tejido empresarial"""
+def create_empresarial_page() -> dbc.Container:
+    """
+    Genera el layout para la página de Tejido Empresarial.
+
+    Aquí se analiza la distribución de las empresas por tamaño y su
+    concentración geográfica dentro del departamento.
+
+    Returns:
+        dbc.Container: El componente de layout para la página empresarial.
+    """
     return dbc.Container([
         html.H1("🏢 Tejido Empresarial", style={'color': '#1f77b4', 'marginBottom': '2rem'}),
         
@@ -234,8 +248,16 @@ def create_empresarial_page():
     ], fluid=True)
 
 # 🎓 PÁGINA EDUCACIÓN
-def create_educacion_page():
-    """Crear página de educación"""
+def create_educacion_page() -> dbc.Container:
+    """
+    Genera el layout para la página de Educación.
+
+    Esta sección presenta indicadores sobre el capital humano, como el número
+    de graduados por área, y la eficiencia del sistema educativo, como la deserción.
+
+    Returns:
+        dbc.Container: El componente de layout para la página de educación.
+    """
     return dbc.Container([
         html.H1("🎓 Educación", style={'color': '#1f77b4', 'marginBottom': '2rem'}),
         
@@ -258,8 +280,16 @@ def create_educacion_page():
     ], fluid=True)
 
 # 🩺 PÁGINA SALUD
-def create_salud_page():
-    """Crear página de salud pública"""
+def create_salud_page() -> dbc.Container:
+    """
+    Genera el layout para la página de Salud Pública.
+
+    Contiene visualizaciones sobre tendencias de salud importantes,
+    como la incidencia de enfermedades de interés público.
+
+    Returns:
+        dbc.Container: El componente de layout para la página de salud.
+    """
     return dbc.Container([
         html.H1("🩺 Salud Pública", style={'color': '#1f77b4', 'marginBottom': '2rem'}),
         
@@ -275,8 +305,16 @@ def create_salud_page():
     ], fluid=True)
 
 # 🛡️ PÁGINA SEGURIDAD
-def create_seguridad_page():
-    """Crear página de seguridad ciudadana"""
+def create_seguridad_page() -> dbc.Container:
+    """
+    Genera el layout para la página de Seguridad Ciudadana.
+
+    Muestra indicadores clave sobre la incidencia de delitos y la
+    seguridad en el departamento.
+
+    Returns:
+        dbc.Container: El componente de layout para la página de seguridad.
+    """
     return dbc.Container([
         html.H1("🛡️ Seguridad Ciudadana", style={'color': '#1f77b4', 'marginBottom': '2rem'}),
         
@@ -292,12 +330,23 @@ def create_seguridad_page():
     ], fluid=True)
 
 # 🔄 CALLBACKS
-@app.callback(
+@callback(
     Output("page-content", "children"),
-    [Input("url", "pathname")]
+    Input("url", "pathname")
 )
-def display_page(pathname):
-    """Mostrar página según la URL"""
+def display_page(pathname: str):
+    """
+    Controlador de navegación principal (Router).
+
+    Este callback se activa cada vez que la URL cambia. Su función es
+    renderizar el layout de la página correspondiente al `pathname` de la URL.
+
+    Args:
+        pathname (str): La ruta de la URL actual (ej. "/", "/economico").
+
+    Returns:
+        Component: El layout de la página a mostrar.
+    """
     if pathname == "/":
         return create_home_page()
     elif pathname == "/economico":
@@ -313,31 +362,33 @@ def display_page(pathname):
     else:
         return create_home_page()
 
-# Callbacks para gráficos (se implementarán en archivos separados)
-@app.callback(Output("grafico-sectores", "srcDoc"), [Input("grafico-sectores", "id")])
-def update_sectores(_):
-    """Actualizar gráfico de sectores"""
-    from pages.sectores import create_sectores_chart
-    return create_sectores_chart()
+# --- Callbacks para Gráficos con Plotly ---
+@callback(Output("grafico-sectores", "figure"), Input("grafico-sectores", "id"))
+def update_sectores_plotly(_):
+    """Actualizar gráfico de sectores con Plotly"""
+    from pages.graficos_plotly import create_sectores_chart_plotly
+    return create_sectores_chart_plotly()
 
-@app.callback(Output("grafico-empresas", "srcDoc"), [Input("grafico-empresas", "id")])
-def update_empresas(_):
-    """Actualizar gráfico de empresas"""
-    from pages.empresas import create_empresas_chart
-    return create_empresas_chart()
+@callback(Output("grafico-empresas", "figure"), Input("grafico-empresas", "id"))
+def update_empresas_plotly(_):
+    """Actualizar gráfico de empresas con Plotly"""
+    from pages.graficos_plotly import create_empresas_chart_plotly
+    return create_empresas_chart_plotly()
 
-@app.callback(Output("grafico-graduados", "srcDoc"), [Input("grafico-graduados", "id")])
-def update_graduados(_):
-    """Actualizar gráfico de graduados"""
-    from pages.graduados import create_graduados_chart
-    return create_graduados_chart()
+@callback(Output("grafico-graduados", "figure"), Input("grafico-graduados", "id"))
+def update_graduados_plotly(_):
+    """Actualizar gráfico de graduados con Plotly"""
+    from pages.graficos_plotly import create_graduados_chart_plotly
+    return create_graduados_chart_plotly()
 
-@app.callback(Output("grafico-dengue", "srcDoc"), [Input("grafico-dengue", "id")])
-def update_dengue(_):
-    """Actualizar gráfico de dengue"""
-    from pages.dengue import create_dengue_chart
-    return create_dengue_chart()
+@callback(Output("grafico-dengue", "figure"), Input("grafico-dengue", "id"))
+def update_dengue_plotly(_):
+    """Actualizar gráfico de dengue con Plotly"""
+    from pages.graficos_plotly import create_dengue_chart_plotly
+    return create_dengue_chart_plotly()
+
 
 if __name__ == "__main__":
     logger.info("🚀 Iniciando Dashboard de Competitividad de Casanare...")
-    app.run(debug=True, host='127.0.0.1', port=8057)
+    # Se desactiva el modo debug para evitar problemas con el auto-reloader en este entorno.
+    app.run(debug=False, host='127.0.0.1', port=8057)
