@@ -1,4 +1,4 @@
-item,sector,programa,tema,subtema,dimensi_n,variables,indicador,tipo_de_medida,nivel_de_desgragaci_n_indicadores,a_o,valor,estado,a_o_de_creaci_n,a_o_de_baja,fuente_indicador,periodo_tiempo,observaciones
+item,sector,programa,tema,subtema,dimensin,variables,indicador,tipo_de_medida,nivel_de_desgragacin_indicadores,ao,valor,estado,ao_de_creacin,ao_de_baja,fuente_indicador,periodo_tiempo,observaciones
 1,Salud,Salud Pública,ESTRUCTURA DEMOGRÁFICA,Demográficos y Estadísticas vitales,Análisis de Situación en Salud,"Número de nacimientos x 100
 ------------------------------------------------
 Número de mujeres de 15 a 49 años de edad",Tasa general de fecundidad,Tasa,DEPARTAMENTO,2021,52.7,Vigente,0,0,SISPRO - Ministerio de Salud y Protección Social | DANE,2018-2028,

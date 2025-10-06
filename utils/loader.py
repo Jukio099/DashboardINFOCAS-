@@ -1,190 +1,186 @@
 """
-Módulo simplificado para la carga de datos limpios desde CSV.
-Lee EXCLUSIVAMENTE desde la carpeta data/clean/ - SIN lógica de limpieza.
+Loader optimizado para carga centralizada de datos
+Versión 3.1 - Corregido para compatibilidad con el nuevo pipeline de limpieza
 """
 
-import streamlit as st
 import pandas as pd
 from pathlib import Path
+from typing import Dict, Any
+import logging
 
-# Directorio de datos limpios
-DATA_DIR = Path("data/clean")
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-@st.cache_data
-def load_generalidades():
-    """Carga datos generales de Casanare."""
-    try:
-        return pd.read_csv(DATA_DIR / "generalidades.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo generalidades.csv no encontrado")
-        return pd.DataFrame()
+class DataLoader:
+    """Cargador centralizado y optimizado de datos para el dashboard."""
 
-@st.cache_data
-def load_sector_economico():
-    """Carga datos de sectores económicos."""
-    try:
-        return pd.read_csv(DATA_DIR / "sector_economico.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo sector_economico.csv no encontrado")
-        return pd.DataFrame()
+    def __init__(self, data_dir: str = "data/clean"):
+        self.data_dir = Path(data_dir)
+        self._cache: Dict[str, pd.DataFrame] = {}
+        self._loaded = False
 
-@st.cache_data
-def load_empresarial():
-    """Carga datos empresariales por tamaño."""
-    try:
-        return pd.read_csv(DATA_DIR / "empresarial.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo empresarial.csv no encontrado")
-        return pd.DataFrame()
+        # Mapeo de archivos a funciones de carga. Nombres de archivo sanitizados.
+        self.file_mappings = {
+            'generalidades': 'generalidades.csv',
+            'sector_economico': 'sector_economico.csv',
+            'empresarial': 'empresarial.csv',
+            'graduados': 'graduados_profesion.csv',
+            'morbilidad': 'morbilidad1.csv',
+            'seguridad': 'seguridad.csv',
+            'desercion': 'tasa_desercin_sector_oficial.csv', # Corregido
+            'municipios_empresas': 'numero_de_empresas_por_municipi.csv',
+            'cultivos': 'cultivos.csv',
+            'calidad_agua': 'calidad_del_agua.csv'
+        }
 
-@st.cache_data
-def load_empresas_municipio():
-    """Carga datos de empresas por municipio."""
-    try:
-        return pd.read_csv(DATA_DIR / "numero_de_empresas_por_municipi.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo numero_de_empresas_por_municipi.csv no encontrado")
-        return pd.DataFrame()
+    def load_all_data(self) -> Dict[str, pd.DataFrame]:
+        """Carga, procesa y cachea todos los datasets necesarios para el dashboard."""
+        if self._loaded:
+            logger.info("📦 Datos ya cargados desde caché.")
+            return self._cache
 
-@st.cache_data
-def load_ciclo_vital():
-    """Carga datos de distribución poblacional por ciclo vital."""
-    try:
-        return pd.read_csv(DATA_DIR / "ciclo_vital.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo ciclo_vital.csv no encontrado")
-        return pd.DataFrame()
+        logger.info("🚀 Cargando y procesando todos los datos...")
 
-@st.cache_data
-def load_graduados():
-    """Carga datos de graduados por área de conocimiento."""
-    try:
-        return pd.read_csv(DATA_DIR / "graduados_profesion.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo graduados_profesion.csv no encontrado")
-        return pd.DataFrame()
+        for key, filename in self.file_mappings.items():
+            try:
+                file_path = self.data_dir / filename
+                if not file_path.exists():
+                    logger.warning(f"⚠️ Archivo no encontrado: {filename}. Se creará un DataFrame vacío.")
+                    self._cache[key] = pd.DataFrame()
+                    continue
 
-@st.cache_data
-def load_desercion():
-    """Carga datos de deserción escolar por municipio."""
-    try:
-        return pd.read_csv(DATA_DIR / "tasa_desercion_sector_oficial.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo tasa_desercion_sector_oficial.csv no encontrado")
-        return pd.DataFrame()
+                df = pd.read_csv(file_path)
+                df = self._optimize_dataframe(df, key)
+                self._cache[key] = df
+                logger.info(f"✅ {key}: {len(df)} registros cargados y optimizados.")
 
-@st.cache_data
-def load_morbilidad():
-    """Carga datos de morbilidad."""
-    try:
-        return pd.read_csv(DATA_DIR / "morbilidad1.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo morbilidad1.csv no encontrado")
-        return pd.DataFrame()
+            except Exception as e:
+                logger.error(f"❌ Error cargando el archivo {filename} para '{key}': {e}", exc_info=True)
+                self._cache[key] = pd.DataFrame()
 
-@st.cache_data
-def load_calidad_agua():
-    """Carga datos de calidad del agua."""
-    try:
-        return pd.read_csv(DATA_DIR / "calidad_del_agua.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo calidad_del_agua.csv no encontrado")
-        return pd.DataFrame()
+        self._loaded = True
+        logger.info(f"📊 Total de datasets cargados: {len(self._cache)}")
+        return self._cache
 
-@st.cache_data
-def load_seguridad():
-    """Carga datos de seguridad ciudadana."""
-    try:
-        return pd.read_csv(DATA_DIR / "seguridad.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo seguridad.csv no encontrado")
-        return pd.DataFrame()
+    def _optimize_dataframe(self, df: pd.DataFrame, key: str) -> pd.DataFrame:
+        """Aplica optimizaciones numéricas y de tipos a un DataFrame."""
+        df = df.dropna(how='all')
 
-@st.cache_data
-def load_estructura_demografica():
-    """Carga datos de estructura demográfica."""
-    try:
-        return pd.read_csv(DATA_DIR / "estructura_demografica.csv")
-    except FileNotFoundError:
-        st.error("❌ Archivo estructura_demografica.csv no encontrado")
-        return pd.DataFrame()
+        # Columnas a convertir a numérico (sanitizadas)
+        numeric_cols = {
+            'generalidades': ['ao', 'valor'],
+            'sector_economico': ['participacin_porcentual'],
+            'empresarial': ['nmero_de_empresas', 'porcentaje_del_total'],
+            'graduados': ['nmero_de_graduados', 'porcentaje_del_total'],
+            'morbilidad': ['ao', 'valor'],
+            'seguridad': ['valor'],
+            'desercion': ['ao', 'tasa_desercin'],
+        }
 
-def get_kpi_values():
-    """Extrae KPIs principales EXCLUSIVAMENTE desde datos CSV."""
-    df_general = load_generalidades()
+        if key in numeric_cols:
+            for col in numeric_cols[key]:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+
+            # No dropear NaNs para 'generalidades' ya que la columna 'valor' es mixta
+            # y se perderían filas importantes como la del ranking.
+            if key != 'generalidades':
+                df = df.dropna(subset=numeric_cols[key])
+
+        return df
+
+    def get_data(self, key: str) -> pd.DataFrame:
+        """Obtiene un DataFrame específico del caché."""
+        if not self._loaded:
+            self.load_all_data()
+        return self._cache.get(key, pd.DataFrame())
+
+    def get_kpis(self) -> Dict[str, Any]:
+        """Extrae los KPIs principales de forma robusta desde el dataset de generalidades."""
+        df_general = self.get_data('generalidades')
+        if df_general.empty:
+            return {}
+
+        kpis = {
+            'poblacion': 0,
+            'pib': 0,
+            'ranking_idc': 0
+        }
+
+        # Extraer Población
+        pop_row = df_general[df_general['indicador'].str.contains('Población Total', case=False, na=False)]
+        if not pop_row.empty:
+            kpis['poblacion'] = int(pop_row['valor'].iloc[0])
+
+        # Extraer PIB
+        pib_row = df_general[df_general['indicador'].str.contains('PIB Departamental', case=False, na=False)]
+        if not pib_row.empty:
+            kpis['pib'] = float(pib_row['valor'].iloc[0])
+
+        # Extraer Ranking del IDC
+        rank_row = df_general[df_general['indicador'].str.contains('Puntaje General IDC', case=False, na=False)]
+        if not rank_row.empty and 'rankingnacional2025' in rank_row.columns:
+            # Asegurarse de que el valor no sea nulo antes de convertir a entero
+            ranking_value = rank_row['rankingnacional2025'].iloc[0]
+            if pd.notna(ranking_value):
+                kpis['ranking_idc'] = int(ranking_value)
+
+        return kpis
     
-    if df_general.empty:
-        st.error("❌ No se pudieron cargar los datos generales. Verifique que el archivo generalidades.csv existe.")
-        return {}
+    def get_empresas_total(self) -> int:
+        """Calcula el número total de empresas usando el nombre de columna correcto."""
+        df_empresas = self.get_data('empresarial')
+        # Corregido: usar el nombre de columna sanitizado 'nmero_de_empresas'
+        if df_empresas.empty or 'nmero_de_empresas' not in df_empresas.columns:
+            return 0
+        return int(df_empresas['nmero_de_empresas'].sum())
     
-    kpis = {}
+    def get_sectores_economicos(self) -> pd.DataFrame:
+        """Obtiene datos de sectores económicos."""
+        return self.get_data('sector_economico')
     
-    # Extraer valores reales desde CSV
-    try:
-        for _, row in df_general.iterrows():
-            indicador = str(row.iloc[1]).lower()
-            valor = row.iloc[3]
-            
-            if 'poblacion' in indicador and 'total' in indicador:
-                kpis['poblacion_2025'] = int(valor) if pd.notna(valor) else 0
-            elif 'pib' in indicador and 'departamental' in indicador:
-                kpis['pib_2023'] = float(valor) if pd.notna(valor) else 0
-            elif 'puntaje' in indicador and 'general' in indicador:
-                kpis['puntaje_idc'] = float(valor) if pd.notna(valor) else 0
-            elif 'ranking' in indicador:
-                kpis['ranking_idc'] = int(valor) if pd.notna(valor) else 0
-    except Exception as e:
-        st.error(f"❌ Error procesando datos generales: {e}")
-        return {}
+    def get_empresas_por_tamano(self) -> pd.DataFrame:
+        """Obtiene datos de empresas por tamaño."""
+        return self.get_data('empresarial')
     
-    return kpis
+    def get_graduados_por_area(self) -> pd.DataFrame:
+        """Obtiene datos de graduados por área de conocimiento."""
+        return self.get_data('graduados') # El nombre de la columna ya está sanitizado
+    
+    def get_dengue_data(self) -> pd.DataFrame:
+        """Filtra y obtiene datos específicos sobre el dengue."""
+        df_morbilidad = self.get_data('morbilidad')
+        if df_morbilidad.empty or 'indicador' not in df_morbilidad.columns:
+            return pd.DataFrame()
 
-def get_salud_kpis():
-    """Extrae KPIs de salud EXCLUSIVAMENTE desde datos CSV."""
-    df_demo = load_estructura_demografica()
+        df_morbilidad['indicador'] = df_morbilidad['indicador'].astype(str)
+        return df_morbilidad[df_morbilidad['indicador'].str.contains('Dengue', case=False, na=False)]
     
-    if df_demo.empty:
-        st.error("❌ No se pudieron cargar los datos demográficos. Verifique que el archivo estructura_demografica.csv existe.")
-        return {}
+    def get_seguridad_data(self) -> pd.DataFrame:
+        """Obtiene datos de seguridad."""
+        return self.get_data('seguridad')
     
-    kpis = {}
+    def get_cultivos_data(self) -> pd.DataFrame:
+        """Obtiene datos de cultivos."""
+        return self.get_data('cultivos')
     
-    # Extraer valores reales desde CSV
-    try:
-        for _, row in df_demo.iterrows():
-            indicador = str(row.iloc[0]).lower()
-            valor = row.iloc[1]
-            
-            if 'esperanza' in indicador and 'vida' in indicador:
-                kpis['esperanza_vida'] = float(valor) if pd.notna(valor) else 0
-            elif 'mortalidad' in indicador and 'infantil' in indicador:
-                kpis['mortalidad_infantil'] = float(valor) if pd.notna(valor) else 0
-            elif 'fecundidad' in indicador and 'adolescente' in indicador:
-                kpis['fecundidad_adolescente'] = float(valor) if pd.notna(valor) else 0
-    except Exception as e:
-        st.error(f"❌ Error procesando datos demográficos: {e}")
-        return {}
+    def get_municipios_empresas(self) -> pd.DataFrame:
+        """Obtiene datos de empresas por municipio."""
+        return self.get_data('municipios_empresas')
     
-    return kpis
+    def get_desercion_data(self) -> pd.DataFrame:
+        """Obtiene datos de deserción escolar."""
+        return self.get_data('desercion')
+    
+    def get_calidad_agua_data(self) -> pd.DataFrame:
+        """Obtiene datos de calidad del agua."""
+        return self.get_data('calidad_agua')
 
-def get_educacion_kpis():
-    """Extrae KPIs de educación EXCLUSIVAMENTE desde datos CSV."""
-    df_desercion = load_desercion()
-    df_graduados = load_graduados()
-    
-    kpis = {}
-    
-    # Calcular desde datos reales
-    if not df_desercion.empty and 'tasa_desercion' in df_desercion.columns:
-        kpis['tasa_desercion_promedio'] = round(df_desercion['tasa_desercion'].mean(), 1)
-    else:
-        st.warning("⚠️ No se encontraron datos de deserción")
-        kpis['tasa_desercion_promedio'] = 0
-    
-    if not df_graduados.empty and 'numero_de_graduados' in df_graduados.columns:
-        kpis['total_graduados'] = int(df_graduados['numero_de_graduados'].sum())
-    else:
-        st.warning("⚠️ No se encontraron datos de graduados")
-        kpis['total_graduados'] = 0
-    
-    return kpis
+# --- Instancia Singleton ---
+# Se crea una única instancia que será compartida por toda la aplicación
+data_loader_instance = DataLoader()
+
+def get_data_loader() -> DataLoader:
+    """Devuelve la instancia única del DataLoader."""
+    return data_loader_instance

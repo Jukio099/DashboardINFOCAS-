@@ -1,19 +1,19 @@
-pilar_competitividad,indicador,a_o,valor,unidad,rankingnacional2025,fuente
-Perfil General,Población Total,2025,481938.0,Habitantes,,IDC 2025 / DANE
-Perfil General,Superficie,2024,44640.0,km²,,Gobernación de Casanare
-Perfil General,PIB Departamental,2023,23082000.0,COP Millones,,IDC 2025 / DANE
-Perfil General,PIB per cápita,2023,49344971.0,COP,,IDC 2025 / DANE
-Perfil General,Puntaje General IDC,2025,,Puntaje /10,17.0,IDC 2025
-Infraestructura,Costo de la energía eléctrica,2025,10.0,Puntaje /10,1.0,IDC 2025 / Superservicios
-Infraestructura,Cobertura efectiva de gas natural y GLP,2025,,Puntaje /10,24.0,IDC 2025
-Infraestructura,Porcentaje de vías primarias en buen estado,2025,7.0,Puntaje /10,20.0,IDC 2025 / INVIAS
+pilarcompetitividad,indicador,ao,valor,unidad,rankingnacional2025,fuente
+Perfil General,Población Total,2025,481938,Habitantes,,IDC 2025 / DANE
+Perfil General,Superficie,2024,44640,km²,,Gobernación de Casanare
+Perfil General,PIB Departamental,2023,23082000,COP Millones,,IDC 2025 / DANE
+Perfil General,PIB per cápita,2023,49344971,COP,,IDC 2025 / DANE
+Perfil General,Puntaje General IDC,2025,2025-01-05 00:00:00,Puntaje /10,17.0,IDC 2025
+Infraestructura,Costo de la energía eléctrica,2025,10,Puntaje /10,1.0,IDC 2025 / Superservicios
+Infraestructura,Cobertura efectiva de gas natural y GLP,2025,2025-08-05 00:00:00,Puntaje /10,24.0,IDC 2025
+Infraestructura,Porcentaje de vías primarias en buen estado,2025,7,Puntaje /10,20.0,IDC 2025 / INVIAS
 Mercado Laboral,Tasa Global de Participación,2025,7.87,Puntaje /10,3.0,IDC 2025 / DANE
-Mercado Laboral,Tasa de Ocupación (Región Orinoquía),2023,60.8,,,DANE (GEIH II Sem 2023)
+Mercado Laboral,Tasa de Ocupación (Región Orinoquía),2023,60.8,%,,DANE (GEIH II Sem 2023)
 Capital Humano,Pilar Educación Básica y Media,2025,7.65,Puntaje /10,6.0,IDC 2025
 Capital Humano,Cobertura neta en educación media,2025,7.68,Puntaje /10,13.0,IDC 2025 / MEN
-Clima y Potencial Agroindustrial,Horas de Sol Promedio,2024,5.0,kWh/m²/día (promedio),,IDEAM (Estimado regional)
-Clima y Potencial Agroindustrial,Frontera Agrícola,2023,3497136.0,Hectáreas,,UPRA
-Clima y Potencial Agroindustrial,Inventario Ganadero Bovino,2025,2384724.0,Cabezas (estimado),4.0,ICA / FEDEGAN
+Clima y Potencial Agroindustrial,Horas de Sol Promedio,2024,5,kWh/m²/día (promedio),,IDEAM (Estimado regional)
+Clima y Potencial Agroindustrial,Frontera Agrícola,2023,3497136,Hectáreas,,UPRA
+Clima y Potencial Agroindustrial,Inventario Ganadero Bovino,2025,2384724,Cabezas (estimado),4.0,ICA / FEDEGAN
 Entorno para Negocios,Facilitación de trámites,2025,7.13,Puntaje /10,4.0,IDC 2025 / Confecámaras
-Entorno para Negocios,Pilar Entorno para los Negocios,2025,,Puntaje /10,9.0,IDC 2025
-Perfil General,PIB per cápita,2024,49344971.0,,,DANE 2024
+Entorno para Negocios,Pilar Entorno para los Negocios,2025,2025-07-06 00:00:00,Puntaje /10,9.0,IDC 2025
+Perfil General,PIB per cápita,2024,49344971,,,DANE 2024
