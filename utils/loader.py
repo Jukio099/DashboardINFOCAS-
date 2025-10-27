@@ -31,7 +31,8 @@ class DataLoader:
             'desercion': 'tasa_desercin_sector_oficial.csv', # Corregido
             'municipios_empresas': 'numero_de_empresas_por_municipi.csv',
             'cultivos': 'cultivos.csv',
-            'calidad_agua': 'calidad_del_agua.csv'
+            'calidad_agua': 'calidad_del_agua.csv',
+            'mortalidad': 'mortalidad1.csv'
         }
 
     def load_all_data(self) -> Dict[str, pd.DataFrame]:
@@ -76,6 +77,7 @@ class DataLoader:
             'morbilidad': ['ao', 'valor'],
             'seguridad': ['valor'],
             'desercion': ['ao', 'tasa_desercin'],
+            'mortalidad': ['valor'],
         }
 
         if key in numeric_cols:
@@ -176,6 +178,10 @@ class DataLoader:
     def get_calidad_agua_data(self) -> pd.DataFrame:
         """Obtiene datos de calidad del agua."""
         return self.get_data('calidad_agua')
+
+    def get_mortalidad_data(self) -> pd.DataFrame:
+        """Obtiene datos de mortalidad."""
+        return self.get_data('mortalidad')
 
 # --- Instancia Singleton ---
 # Se crea una única instancia que será compartida por toda la aplicación
